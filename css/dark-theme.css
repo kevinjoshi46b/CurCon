@@ -1,0 +1,28 @@
+body {
+    background-color: #121212;
+}
+
+.title, .result {
+    color: white;
+}
+
+.dropdown, .amount, .tags {
+    color: #E2E2E2;
+}
+
+.page, .dropdown, .amount {
+    background-color: #1E1E1E;
+}
+
+.dropdown, .amount {
+    border-color: white;
+}
+
+.convert {
+    background-color: #35DAC6;
+    color: #1E1E1E;
+}
+
+.convert:hover {
+    background-color: #35dac7e0;
+}

@@ -9,7 +9,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/light-theme.css">
+    <link rel="stylesheet" href="css/index.css">
+    <?php ?>
+    <!-- <link rel="stylesheet" href="css/light-theme.css"> -->
+    <link rel="stylesheet" href="css/dark-theme.css">
 </head>
 
 <body>
