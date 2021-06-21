@@ -6,45 +6,50 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CurCon</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/footer.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/light-theme.css">
 </head>
 
 <body>
     <?php include "html/header.html" ?>
-
-    <form>
+    <form action="index.php" method="POST">
         <div class="page">
-            <div class="input">
-                <select class="form-select" require>
+            <div class="dropdown-div">
+                <label for="from" class="tags">From</label><br>
+                <select class="dropdown" id="from" require>
                     <option selected>Select</option>
-                    <?php 
+                    <?php
                     // loop to list all the available options
                     ?>
                 </select>
-                <label for="amount">Amount:</label>
-                <input type="number" class="form-control" id="amount" require>
             </div>
-            <div class="buttons">
-                <input type="submit" class="btn btn-dark" value="Convert">
-                <input type="reset" class="btn btn-dark" value="Reset">
-            </div>
-            <div class="output">
-                <select class="form-select" require>
+            <div class="dropdown-div">
+                <label for="to" class="tags">To</label><br>
+                <select class="dropdown" id="to" require>
                     <option selected>Select</option>
-                    <?php 
+                    <?php
                     // loop to list all the available options
                     ?>
                 </select>
+            </div>
+            <div class="amount-div">
+                <label for="amount" class="tags">Amount</label><br>
+                <input type="number" class="amount" id="amount" require>
+            </div>
+            <div class="result-div">
+                <p class="tags">Result</p>
+                <p class="result">1440 AUD</p>
+                <?php ?>
+            </div>
+            <div class="convert-div">
+                <input type="submit" class="convert" value="Convert">
             </div>
         </div>
     </form>
 
     <?php include "html/footer.html" ?>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 </body>
 
 </html>
