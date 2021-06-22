@@ -38,6 +38,10 @@ body {
     height: 34px;
 }
 
+.dropdown:hover {
+    cursor: pointer;
+}
+
 .amount {
     width: 97.38%;
     padding-left: 5px;
