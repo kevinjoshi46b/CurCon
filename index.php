@@ -20,8 +20,20 @@
         }
         ?>
         <form method="post">
-            <button type="submit" name="dark" class="button dark-button">DARK</button>
-            <button type="submit" name="light" class="button light-button">LIGHT</button>
+            <div class="dark-side">
+                <div class="centered">
+                    <button type="submit" name="dark" class="button dark-button">
+                        <img src="assets/dark mode logo.png" alt="dark mode logo">
+                    </button>
+                </div>
+            </div>
+            <div class="light-side">
+                <div class="centered">
+                    <button type="submit" name="light" class="button light-button">
+                        <img src="assets/light mode logo.png" alt="light mode logo">
+                    </button>
+                </div>
+            </div>
         </form>
     </div>
 </body>

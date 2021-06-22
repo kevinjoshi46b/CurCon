@@ -19,10 +19,10 @@ body {
 }
 
 .convert {
-    background-color: #35DAC6;
-    color: #1E1E1E;
+    background-color: #F9266C;
+    color: white;
 }
 
 .convert:hover {
-    background-color: #35dac7e0;
+    background-color: #f9266ce0;
 }
