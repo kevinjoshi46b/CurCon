@@ -2,6 +2,10 @@
 
 <form action="index.php" method="POST">
     <div class="page">
+        <div class="amount-div">
+            <label for="amount" class="tags">Amount</label><br>
+            <input type="number" class="amount" id="amount" require>
+        </div>
         <div class="dropdown-div">
             <label for="from" class="tags">From</label><br>
             <select class="dropdown" id="from" require>
@@ -19,10 +23,6 @@
                 // loop to list all the available options
                 ?>
             </select>
-        </div>
-        <div class="amount-div">
-            <label for="amount" class="tags">Amount</label><br>
-            <input type="number" class="amount" id="amount" require>
         </div>
         <div class="result-div">
             <p class="tags">Result</p>
