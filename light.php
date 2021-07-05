@@ -7,7 +7,11 @@
 </head>
 
 <body>
-    <?php include "common.php" ?>
+    <h1 class="title">Currency Converter</h1>
+    <form action="light.php" method="POST">
+        <?php include "common.php" ?>
+    </form>
+    <?php include "html/footer.html" ?>
 </body>
 
 </html>
