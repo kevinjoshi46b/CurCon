@@ -1,35 +1,41 @@
 <?php
 date_default_timezone_set("Indian/Mahe");
 $date = date("Y-m-d");
-
 $dbHost = getenv('DB_HOST');
 $dbName = getenv('DB_NAME');
 $dbUser = getenv('DB_USER');
 $dbPassword = getenv('DB_PASSWORD');
+$API_KEY = getenv('API_KEY');
 
-try {
-    $pgsql = new PDO("pgsql:host=$dbHost;dbname=$dbName", $dbUser, $dbPassword);
-} catch (Exception $error) {
-    echo "<script>alert('$error->getMessage()');</script>";
-}
-
-$query = $pgsql->query("select * from ApiCalls");
-$query->setFetchMode(PDO::FETCH_ASSOC);
-$row = $query->fetch();
-$db_apicalls_day = $row['day'];
-$db_apicalls_count = $row['count'];
-
-if ($db_apicalls_day === $date) {
-    // code block where the api call count increases
-    echo "<script>alert('$db_apicalls_day $db_apicalls_count');</script>";
+if (isset($_POST['convert'])) {
+    // Code for when the convert button is clicked
+    echo " ";
 } else {
-    // code block where its a different day so the api call count is reset
-    echo "<script>alert('$date');</script>";
-    $pgsql->query("truncate table ApiCalls");
-    $pgsql->query("insert into ApiCalls values ('$date',0)");
-}
+    // Code for when the page is loaded
+    try {
+        $pgsql = new PDO("pgsql:host=$dbHost;dbname=$dbName", $dbUser, $dbPassword);
+    } catch (Exception $error) {
+        echo "<script>alert('$error->getMessage()');</script>";
+    }
 
-$query = null;
+    $query = $pgsql->query("select * from ApiCalls");
+    $query->setFetchMode(PDO::FETCH_ASSOC);
+    $row = $query->fetch();
+    $db_apicalls_day = $row['day'];
+    $db_apicalls_count = $row['count'];
+
+    if ($db_apicalls_day === $date) {
+        // code block where the api call count increases
+        echo "<script>alert('$db_apicalls_day $db_apicalls_count');</script>";
+    } else {
+        // code block where its a different day so the api call count is reset
+        echo "<script>alert('$date');</script>";
+        $pgsql->query("truncate table ApiCalls");
+        $pgsql->query("insert into ApiCalls values ('$date',0)");
+    }
+
+    $query = null;
+}
 ?>
 
 <div class="page">
