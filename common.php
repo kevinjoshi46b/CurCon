@@ -15,8 +15,26 @@ try {
 }
 
 if (isset($_POST['convert'])) {
-    // Code for when the convert button is clicked
-    echo " ";
+    $result = 0;
+
+    $query = $pgsql->query("select * from ApiCalls");
+    $query->setFetchMode(PDO::FETCH_ASSOC);
+    $row = $query->fetch();
+    $dbApiCallsDay = $row['day'];
+    $dbApiCallsCount = (int)$row['count'];
+
+    if ($dbApiCallsDay === $day && $dbApiCallsCount >= 98) {
+        $limitReached = true;
+    } else {
+        if ($dbApiCallsDay === $day) {
+            $dbApiCallsCount += 1;
+            $pgsql->query("update ApiCalls set count=$dbApiCallsCount where day='$day'");
+        } else {
+            $pgsql->query("truncate table ApiCalls");
+            $pgsql->query("insert into ApiCalls values ('$day',1)");
+        }
+        // Code to generate the result using API
+    }
 } else {
     $currenciesList = array();
     $year = (int)substr($day, 0, 4);
@@ -74,9 +92,12 @@ $query = null;
         </select>
     </div>
     <div class="result-div">
-        <p class="tags">Result</p>
-        <p class="result">1440 AUD</p>
-        <?php ?>
+        <?php 
+        if (isset($_POST['convert'])) {
+            echo "<p class='tags'>Result</p>";
+            echo "<p class='result'>$result</p>";
+        }
+        ?>
     </div>
     <div class="convert-div">
         <input type="submit" name="convert" class="convert" value="Convert">
