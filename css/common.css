@@ -73,6 +73,37 @@ body {
     cursor: pointer;
 }
 
+.footer {
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 96%;
+}
+
+.made-by, .lower-text {
+    margin: 8px;
+}
+
+.made-by {
+    font-size: 18px;
+}
+
+.lower-text {
+    font-size: 8px;
+}
+
+.disclaimer, .green, .red {
+    font-weight: bold;
+}
+
+.green {
+    color: rgb(0, 180, 15);
+}
+
+.red {
+    color: red;
+}
+
 @media only screen and (min-width: 600px) {
     .title {
         font-size: 56px;
@@ -98,5 +129,14 @@ body {
     }
     .convert-div {
         margin-top: 3.5%;
+    }
+    .made-by, .lower-text {
+        margin: 10px;
+    }
+    .made-by {
+        font-size: 24px;
+    }
+    .lower-text {
+        font-size: 12px;
     }
 }

@@ -23,16 +23,11 @@ if (isset($_POST['convert'])) {
     $dbApiCallsDay = $row['day'];
     $dbApiCallsCount = (int)$row['count'];
 
-    if ($dbApiCallsDay === $day && $dbApiCallsCount >= 98) {
+    if ($dbApiCallsCount >= 98) {
         $limitReached = true;
     } else {
-        if ($dbApiCallsDay === $day) {
-            $dbApiCallsCount += 1;
-            $pgsql->query("update ApiCalls set count=$dbApiCallsCount where day='$day'");
-        } else {
-            $pgsql->query("truncate table ApiCalls");
-            $pgsql->query("insert into ApiCalls values ('$day',1)");
-        }
+        $dbApiCallsCount += 1;
+        $pgsql->query("update ApiCalls set count=$dbApiCallsCount where day='$day'");
         // Code to generate the result using API
     }
 } else {
@@ -61,7 +56,6 @@ if (isset($_POST['convert'])) {
         }
     }
 }
-$query = null;
 ?>
 
 <div class="page">
@@ -92,7 +86,7 @@ $query = null;
         </select>
     </div>
     <div class="result-div">
-        <?php 
+        <?php
         if (isset($_POST['convert'])) {
             echo "<p class='tags'>Result</p>";
             echo "<p class='result'>$result</p>";
