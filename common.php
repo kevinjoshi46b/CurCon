@@ -1,41 +1,49 @@
 <?php
+$limitReached = false;
 date_default_timezone_set("Indian/Mahe");
-$date = date("Y-m-d");
+$day = date("Y-m-d");
 $dbHost = getenv('DB_HOST');
 $dbName = getenv('DB_NAME');
 $dbUser = getenv('DB_USER');
 $dbPassword = getenv('DB_PASSWORD');
 $API_KEY = getenv('API_KEY');
 
+try {
+    $pgsql = new PDO("pgsql:host=$dbHost;dbname=$dbName", $dbUser, $dbPassword);
+} catch (Exception $error) {
+    echo "<script>alert('$error->getMessage()');</script>";
+}
+
 if (isset($_POST['convert'])) {
     // Code for when the convert button is clicked
     echo " ";
 } else {
-    // Code for when the page is loaded
-    try {
-        $pgsql = new PDO("pgsql:host=$dbHost;dbname=$dbName", $dbUser, $dbPassword);
-    } catch (Exception $error) {
-        echo "<script>alert('$error->getMessage()');</script>";
-    }
+    $currenciesList = array();
+    $year = (int)substr($day, 0, 4);
+    $month = (int)substr($day, 6, 2);
 
-    $query = $pgsql->query("select * from ApiCalls");
+    $query = $pgsql->query("select * from CurrencyListCalls");
     $query->setFetchMode(PDO::FETCH_ASSOC);
     $row = $query->fetch();
-    $db_apicalls_day = $row['day'];
-    $db_apicalls_count = $row['count'];
+    $dbCurrencyListCallsDay = $row['day'];
+    $dbCurrencyListCallsYear = (int)substr($dbCurrencyListCallsDay, 0, 4);
+    $dbCurrencyListCallsMonth = (int)substr($dbCurrencyListCallsDay, 6, 2);
 
-    if ($db_apicalls_day === $date) {
-        // code block where the api call count increases
-        echo "<script>alert('$db_apicalls_day $db_apicalls_count');</script>";
-    } else {
-        // code block where its a different day so the api call count is reset
-        echo "<script>alert('$date');</script>";
+    if (($year != $dbCurrencyListCallsYear) || ($month != $dbCurrencyListCallsMonth)) {
         $pgsql->query("truncate table ApiCalls");
-        $pgsql->query("insert into ApiCalls values ('$date',0)");
+        $pgsql->query("insert into ApiCalls values ('$day',1)");
+        $pgsql->query("truncate table CurrencyListCalls");
+        $pgsql->query("inset into CurrencyListCalls values ('$day')");
+        // Code to update the list of available currencies
+    } else {
+        $query = $pgsql->query("select * from CurrenciesList");
+        $query->setFetchMode(PDO::FETCH_ASSOC);
+        while ($row = $query->fetch()) {
+            $currenciesList[$row['code']] = $row['name'];
+        }
     }
-
-    $query = null;
 }
+$query = null;
 ?>
 
 <div class="page">
@@ -46,18 +54,22 @@ if (isset($_POST['convert'])) {
     <div class="dropdown-div">
         <label for="from" class="tags">From</label><br>
         <select class="dropdown" id="from" require>
-            <option selected>Select</option>
+            <option value="default" selected>Select</option>
             <?php
-            // loop to list all the available options
+            foreach ($currenciesList as $key => $value) {
+                echo "<option value='$key'>$key - $value</option>";
+            }
             ?>
         </select>
     </div>
     <div class="dropdown-div">
         <label for="to" class="tags">To</label><br>
         <select class="dropdown" id="to" require>
-            <option selected>Select</option>
+            <option value="default" selected>Select</option>
             <?php
-            // loop to list all the available options
+            foreach ($currenciesList as $key => $value) {
+                echo "<option value='$key'>$key - $value</option>";
+            }
             ?>
         </select>
     </div>
