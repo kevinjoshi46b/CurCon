@@ -14,10 +14,10 @@
     <div>
         <?php
         if (isset($_POST['dark'])) {
-            header("Location: dark.php");
+            header("Location: php/dark.php");
         }
         if (isset($_POST['light'])) {
-            header("Location: light.php");
+            header("Location: php/light.php");
         }
         ?>
         <form method="post">

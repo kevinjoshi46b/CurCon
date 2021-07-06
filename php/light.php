@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    <?php include "html/head.html" ?>
-    <link rel="stylesheet" href="css/light-theme.css">
+    <?php include "head.php" ?>
+    <link rel="stylesheet" href="../css/light-theme.css">
 </head>
 
 <body>
@@ -11,7 +11,7 @@
     <form action="light.php" method="POST">
         <?php include "common.php" ?>
     </form>
-    <?php include "html/footer.html" ?>
+    <?php include "footer.php" ?>
 </body>
 
 </html>
