@@ -52,7 +52,7 @@ if (isset($_POST['convert'])) {
             $apiResult = json_decode($json, true)['quotes'];
             $result = ($apiResult['USD' . $to] * $amount) / $apiResult['USD' . $from];
             if (preg_match('/\.\d{3,}/', $amount)) {
-                echo "<script>alert('I see you there. Congratulations you found the easter egg! Enjoy!');</script>";
+                echo "<script>alert('Congratulations you found the easter egg! Enjoy!');</script>";
             } else {
                 $result = round($result, 2);
             }
