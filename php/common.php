@@ -21,23 +21,31 @@ if (isset($_POST['convert'])) {
     $row = $query->fetch();
     $dbApiCallsCount = (int)$row['count'];
 
-    if ($dbApiCallsCount >= 248) {
-        $result = 'Maximum API Requests Reached!';
+    $amount = $_POST['amount'];
+    $from = $_POST['from'];
+    $to = $_POST['to'];
+
+    if ($from === 'default' || $from === null) {
+        echo "<script>alert('Please select a \'from\' currency!');</script>";
+        $result = 'INPUT MISSING!';
+    } elseif ($to === 'default' || $to === null) {
+        echo "<script>alert('Please select a \'to\' currency!');</script>";
+        $result = 'INPUT MISSING!';
     } else {
-        $dbApiCallsCount += 1;
-        $pgsql->query("truncate table ApiCalls");
-        $pgsql->query("insert into ApiCalls values ($dbApiCallsCount)");
+        if ($dbApiCallsCount >= 248) {
+            $result = 'Maximum API Requests Reached!';
+        } else {
+            $dbApiCallsCount += 1;
+            $pgsql->query("truncate table ApiCalls");
+            $pgsql->query("insert into ApiCalls values ($dbApiCallsCount)");
 
-        $from = $_POST['from'];
-        $to = $_POST['to'];
-        $amount = (float)$_POST['amount'];
-
-        $ch = curl_init('http://api.currencylayer.com/live?access_key=' . $API_KEY . '&currencies=' . $from . ',' . $to);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $json = curl_exec($ch);
-        curl_close($ch);
-        $apiResult = json_decode($json, true)['quotes'];
-        $result = round(($apiResult['USD' . $to] * $amount) / $apiResult['USD' . $from],2);
+            $ch = curl_init('http://api.currencylayer.com/live?access_key=' . $API_KEY . '&currencies=' . $from . ',' . $to);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $json = curl_exec($ch);
+            curl_close($ch);
+            $apiResult = json_decode($json, true)['quotes'];
+            $result = round(($apiResult['USD' . $to] * $amount) / $apiResult['USD' . $from], 2);
+        }
     }
 } else {
     $currenciesList = array();
@@ -85,11 +93,11 @@ if (isset($_POST['convert'])) {
 <div class="page">
     <div class="amount-div">
         <label for="amount" class="tags">Amount</label><br>
-        <input type="number" step="0.01" class="amount" id="amount" name="amount" require>
+        <input type="number" step="0.01" class="amount" id="amount" name="amount" required>
     </div>
     <div class="dropdown-div">
         <label for="from" class="tags">From</label><br>
-        <select class="dropdown" id="from" name="from" require>
+        <select class="dropdown" id="from" name="from" required>
             <option value="default" selected>Select</option>
             <?php
             foreach ($currenciesList as $key => $value) {
@@ -100,7 +108,7 @@ if (isset($_POST['convert'])) {
     </div>
     <div class="dropdown-div">
         <label for="to" class="tags">To</label><br>
-        <select class="dropdown" id="to" name="to" require>
+        <select class="dropdown" id="to" name="to" required>
             <option value="default" selected>Select</option>
             <?php
             foreach ($currenciesList as $key => $value) {
