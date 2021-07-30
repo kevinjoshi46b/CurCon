@@ -1,5 +1,4 @@
 <?php
-$limitReached = false;
 date_default_timezone_set("Indian/Mahe");
 $day = date("Y-m-d");
 $dbHost = getenv('DB_HOST');
@@ -20,14 +19,14 @@ if (isset($_POST['convert'])) {
     $query = $pgsql->query("select * from ApiCalls");
     $query->setFetchMode(PDO::FETCH_ASSOC);
     $row = $query->fetch();
-    $dbApiCallsDay = $row['day'];
     $dbApiCallsCount = (int)$row['count'];
 
-    if ($dbApiCallsCount >= 98) {
-        $limitReached = true;
+    if ($dbApiCallsCount >= 248) {
+        $result = 'Maximum API Requests Reached!';
     } else {
         $dbApiCallsCount += 1;
-        $pgsql->query("update ApiCalls set count=$dbApiCallsCount where day='$day'");
+        $pgsql->query("truncate table ApiCalls");
+        $pgsql->query("insert into ApiCalls values ($dbApiCallsCount)");
         // Code to generate the result using API
     }
 } else {
@@ -44,9 +43,9 @@ if (isset($_POST['convert'])) {
 
     if (($year != $dbCurrencyListCallsYear) || ($month != $dbCurrencyListCallsMonth)) {
         $pgsql->query("truncate table ApiCalls");
-        $pgsql->query("insert into ApiCalls values ('$day',1)");
+        $pgsql->query("insert into ApiCalls values (1)");
         $pgsql->query("truncate table CurrencyListCalls");
-        $pgsql->query("inset into CurrencyListCalls values ('$day')");
+        $pgsql->query("insert into CurrencyListCalls values ('$day')");
         // Code to update the list of available currencies
     } else {
         $query = $pgsql->query("select * from CurrenciesList");
