@@ -3,10 +3,18 @@ body {
 }
 
 .title {
+    margin: 1% auto 10%;
+    text-align: center;
+}
+
+.title a {
+    text-decoration: none;
+}
+
+.title h1 {
     font-size: 40px;
     font-family: 'Lobster', cursive;
-    text-align: center;
-    margin: 1% 0 10%;
+    display:inline;
 }
 
 .page {
@@ -106,8 +114,10 @@ body {
 
 @media only screen and (min-width: 600px) {
     .title {
-        font-size: 56px;
         margin-bottom: 4%;
+    }
+    .title h1 {
+        font-size: 56px;
     }
     .page {
         width: 78%;

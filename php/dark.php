@@ -7,7 +7,11 @@
 </head>
 
 <body>
-    <h1 class="title">Currency Converter</h1>
+    <div class="title">
+        <a href="../">
+            <h1>Currency Converter</h1>
+        </a>
+    </div>
     <form action="dark.php" method="POST">
         <?php include "common.php" ?>
     </form>
