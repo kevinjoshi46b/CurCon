@@ -46,7 +46,23 @@ if (isset($_POST['convert'])) {
         $pgsql->query("insert into ApiCalls values (1)");
         $pgsql->query("truncate table CurrencyListCalls");
         $pgsql->query("insert into CurrencyListCalls values ('$day')");
-        // Code to update the list of available currencies
+
+        $endpoint = 'list';
+        $ch = curl_init('http://api.currencylayer.com/' . $endpoint . '?access_key=' . $API_KEY);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $json = curl_exec($ch);
+        curl_close($ch);
+        $currenciesList = json_decode($json, true);
+        $currenciesList = $currenciesList['currencies'];
+
+        $currenciesInsertionList = "";
+        foreach ($currenciesList as $key => $value) {
+            $currenciesInsertionList = $currenciesInsertionList . "('$key','$value'),";
+        }
+        $currenciesInsertionListLen = strlen($currenciesInsertionList) - 1;
+        $currenciesInsertionList = substr($currenciesInsertionList, 0, $currenciesInsertionListLen);
+        $pgsql->query("truncate table CurrenciesList");
+        $pgsql->query("insert into CurrenciesList values $currenciesInsertionList ;");
     } else {
         $query = $pgsql->query("select * from CurrenciesList");
         $query->setFetchMode(PDO::FETCH_ASSOC);
