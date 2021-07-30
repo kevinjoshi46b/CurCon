@@ -24,21 +24,26 @@ if (isset($_POST['convert'])) {
     $amount = $_POST['amount'];
     $from = $_POST['from'];
     $to = $_POST['to'];
+    $currency = $to;
 
     if ($amount == null) {
         echo "<script>alert('Please enter an amount to be converted!');</script>";
         $result = 'AMOUNT INPUT MISSING';
+        $currency = '';
     } elseif ($amount == 0) {
         echo "<script>alert('Seriously zero!');</script>";
     } elseif ($from === 'default' || $from === null) {
         echo "<script>alert('Please select a \'from\' currency!');</script>";
         $result = 'FROM INPUT MISSING!';
+        $currency = '';
     } elseif ($to === 'default' || $to === null) {
         echo "<script>alert('Please select a \'to\' currency!');</script>";
         $result = 'TO INPUT MISSING!';
+        $currency = '';
     } else {
         if ($dbApiCallsCount >= 248) {
             $result = 'Maximum API Requests Reached!';
+            $currency = '';
         } else {
             $dbApiCallsCount += 1;
             $pgsql->query("truncate table ApiCalls");
@@ -159,7 +164,7 @@ if (isset($_POST['convert'])) {
         <?php
         if (isset($_POST['convert'])) {
             echo "<p class='tags'>Result</p>";
-            echo "<p class='result'>$result</p>";
+            echo "<p class='result'>$result $currency</p>";
         }
         ?>
     </div>
