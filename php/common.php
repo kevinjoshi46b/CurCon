@@ -26,7 +26,6 @@ if (isset($_POST['convert'])) {
     $to = $_POST['to'];
 
     if ($amount == null) {
-        $amount = 0;
         echo "<script>alert('Please enter an amount to be converted!');</script>";
         $result = 'AMOUNT INPUT MISSING';
     } elseif ($amount == 0) {
