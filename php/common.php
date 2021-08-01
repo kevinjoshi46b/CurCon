@@ -86,7 +86,7 @@ if (isset($_POST['convert'])) {
         $pgsql->query("truncate table CurrencyListCalls");
         $pgsql->query("insert into CurrencyListCalls values ('$day')");
 
-        $ch = curl_init('http://api.currencylayer.com/?access_key=' . $API_KEY);
+        $ch = curl_init('http://api.currencylayer.com/list?access_key=' . $API_KEY);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $json = curl_exec($ch);
         curl_close($ch);

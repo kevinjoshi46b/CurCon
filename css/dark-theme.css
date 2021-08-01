@@ -14,10 +14,6 @@ body {
     background-color: #1E1E1E;
 }
 
-.dropdown, .amount {
-    border-color: white;
-}
-
 .convert {
     background-color: #F9266C;
     color: white;

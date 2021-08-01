@@ -44,6 +44,7 @@ body {
 
 .dropdown {
     height: 34px;
+    border-color: rgba(95, 95, 95, 0.85);
 }
 
 .dropdown:hover {
@@ -54,6 +55,7 @@ body {
     width: 97.38%;
     padding-left: 5px;
     height: 30px;
+    border-color: rgba(95, 95, 95, 0.85);
 }
 
 .result-div>p {
