@@ -20,7 +20,7 @@ The following project uses a currency converting API from [CURRENCYLAYER](https:
 
 ## Running this project  
 
-1. Clone the repository in the XAMP or LAMP's respective directory
+1. Clone this repository in your apache server's directory
 2. Add the environment variables from the env-sample file
 3. Open the index file in browser
 
